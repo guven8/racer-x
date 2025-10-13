@@ -1,0 +1,3 @@
+- **Code**: filename‑kebab for modules; export types first; no default exports except React‑style UI (if used).
+- **Units**: meters, kilograms, seconds, Newtons, radians. Kph only in UI.
+- **Data**: JSON schemas versioned; semantic version bump on breaking changes.

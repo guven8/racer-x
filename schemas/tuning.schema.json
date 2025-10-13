@@ -1,0 +1,65 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Racer-X Car Tuning",
+  "type": "object",
+  "required": [
+    "mass",
+    "inertia",
+    "engine",
+    "gears",
+    "finalDrive",
+    "tire",
+    "aero"
+  ],
+  "properties": {
+    "mass": { "type": "number", "minimum": 300, "maximum": 3000 },
+    "inertia": {
+      "type": "array",
+      "items": { "type": "number", "minimum": 1 },
+      "minItems": 3,
+      "maxItems": 3
+    },
+    "engine": {
+      "type": "object",
+      "required": ["maxRPM", "torqueCurve"],
+      "properties": {
+        "maxRPM": { "type": "number", "minimum": 3000, "maximum": 12000 },
+        "torqueCurve": {
+          "type": "array",
+          "items": {
+            "type": "array",
+            "items": [
+              { "type": "number", "description": "rpm" },
+              { "type": "number", "description": "torque (Nm)" }
+            ],
+            "minItems": 2,
+            "maxItems": 2
+          }
+        }
+      }
+    },
+    "gears": {
+      "type": "array",
+      "items": { "type": "number", "exclusiveMinimum": 0 }
+    },
+    "finalDrive": { "type": "number", "exclusiveMinimum": 0 },
+    "tire": {
+      "type": "object",
+      "required": ["frontWidth", "rearWidth", "mu"],
+      "properties": {
+        "frontWidth": { "type": "number" },
+        "rearWidth": { "type": "number" },
+        "mu": { "type": "number", "minimum": 0.5, "maximum": 2.5 }
+      }
+    },
+    "aero": {
+      "type": "object",
+      "required": ["cd", "clFront", "clRear"],
+      "properties": {
+        "cd": { "type": "number", "minimum": 0.15, "maximum": 1.2 },
+        "clFront": { "type": "number" },
+        "clRear": { "type": "number" }
+      }
+    }
+  }
+}

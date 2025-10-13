@@ -1,0 +1,4 @@
+- Vehicle damage (visual + mechanical), pit strategy (later).
+- Career shell with event ladder, credits, parts.
+- Livery editor (param decals + SVG masks) and photo exports.
+- Accessibility: color-blind HUD palettes, one‑hand controls mode.
