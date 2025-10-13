@@ -1,0 +1,88 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Racer-X Road Graph",
+  "type": "object",
+  "required": ["nodes", "edges"],
+  "properties": {
+    "meta": {
+      "type": "object",
+      "properties": {
+        "units": { "const": "meters" },
+        "version": { "type": "string" }
+      },
+      "additionalProperties": false
+    },
+    "nodes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "position"],
+        "properties": {
+          "id": { "type": "string", "pattern": "^[A-Za-z0-9_-]+$" },
+          "position": {
+            "type": "array",
+            "items": { "type": "number" },
+            "minItems": 3,
+            "maxItems": 3,
+            "description": "[x,y,z] in meters"
+          }
+        },
+        "additionalProperties": false
+      },
+      "minItems": 2
+    },
+    "edges": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "from", "to", "lanes", "maxSpeedKph", "spline"],
+        "properties": {
+          "id": { "type": "string", "pattern": "^[A-Za-z0-9_-]+$" },
+          "from": { "type": "string" },
+          "to": { "type": "string" },
+          "oneWay": { "type": "boolean", "default": true },
+          "lanes": {
+            "type": "object",
+            "required": ["forward", "back"],
+            "properties": {
+              "forward": { "type": "integer", "minimum": 0, "maximum": 4 },
+              "back": { "type": "integer", "minimum": 0, "maximum": 4 },
+              "widthM": {
+                "type": "number",
+                "minimum": 2.5,
+                "maximum": 5.0,
+                "default": 3.6
+              },
+              "shoulderM": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 3,
+                "default": 0.5
+              }
+            },
+            "additionalProperties": false
+          },
+          "maxSpeedKph": { "type": "number", "minimum": 10, "maximum": 200 },
+          "spline": {
+            "type": "array",
+            "description": "Catmull-Rom or cubic points along the edge, including endpoints",
+            "items": {
+              "type": "array",
+              "items": { "type": "number" },
+              "minItems": 3,
+              "maxItems": 3
+            },
+            "minItems": 2
+          },
+          "tags": {
+            "type": "array",
+            "items": { "type": "string" }
+          }
+        },
+        "additionalProperties": false
+      },
+      "minItems": 1
+    }
+  },
+  "additionalProperties": false
+}

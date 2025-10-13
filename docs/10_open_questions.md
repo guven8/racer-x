@@ -1,0 +1,4 @@
+- Map size vs first‑play download—what’s the sweet spot for M1?
+- Do we need off‑road (gravel/grass) physics in M1 or asphalt only?
+- How dynamic should traffic be (incidents, parked cars) without hurting perf?
+- Is fast‑travel needed in M1 or rely on a compact map?

@@ -1,0 +1,104 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Racer-X Activities",
+  "type": "object",
+  "required": ["activities"],
+  "properties": {
+    "activities": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "name", "type", "gates", "stars"],
+        "properties": {
+          "id": { "type": "string", "pattern": "^[A-Za-z0-9_-]+$" },
+          "name": { "type": "string" },
+          "type": { "enum": ["speed_trap", "drift_zone", "time_section"] },
+          "edgeId": {
+            "type": "string",
+            "description": "Optional primary road edge reference"
+          },
+          "gates": {
+            "type": "array",
+            "description": "World-space gate positions (center points) in meters",
+            "items": {
+              "type": "array",
+              "items": { "type": "number" },
+              "minItems": 3,
+              "maxItems": 3
+            },
+            "minItems": 1
+          },
+          "widthM": {
+            "type": "number",
+            "minimum": 3,
+            "maximum": 50,
+            "default": 8
+          },
+          "scoring": {
+            "type": "object",
+            "description": "Scoring parameters by activity type",
+            "properties": {
+              "speed_trap": {
+                "type": "object",
+                "properties": { "unit": { "const": "kph" } },
+                "additionalProperties": false
+              },
+              "drift_zone": {
+                "type": "object",
+                "properties": {
+                  "angleWeight": { "type": "number", "default": 1.0 },
+                  "speedWeight": { "type": "number", "default": 1.0 }
+                },
+                "additionalProperties": false
+              },
+              "time_section": {
+                "type": "object",
+                "properties": {
+                  "rollingStart": { "type": "boolean", "default": true }
+                },
+                "additionalProperties": false
+              }
+            },
+            "additionalProperties": false
+          },
+          "stars": {
+            "type": "object",
+            "required": ["one", "two", "three"],
+            "properties": {
+              "one": { "type": "number" },
+              "two": { "type": "number" },
+              "three": { "type": "number" }
+            },
+            "additionalProperties": false
+          }
+        },
+        "additionalProperties": false,
+        "allOf": [
+          {
+            "if": { "properties": { "type": { "const": "speed_trap" } } },
+            "then": {
+              "required": ["scoring"],
+              "properties": {
+                "stars": { "description": "kph thresholds (>=)" }
+              }
+            }
+          },
+          {
+            "if": { "properties": { "type": { "const": "drift_zone" } } },
+            "then": { "required": ["scoring"] }
+          },
+          {
+            "if": { "properties": { "type": { "const": "time_section" } } },
+            "then": {
+              "required": ["scoring"],
+              "properties": {
+                "stars": { "description": "seconds thresholds (<=)" }
+              }
+            }
+          }
+        ]
+      }
+    }
+  },
+  "additionalProperties": false
+}

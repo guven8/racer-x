@@ -1,0 +1,53 @@
+{
+  "activities": [
+    {
+      "id": "speedtrap_01",
+      "name": "Main Straight Speed Trap",
+      "type": "speed_trap",
+      "edgeId": "e1",
+      "gates": [
+        [
+          50,
+          0,
+          0
+        ]
+      ],
+      "widthM": 8,
+      "scoring": {
+        "speed_trap": {
+          "unit": "kph"
+        }
+      },
+      "stars": {
+        "one": 120,
+        "two": 160,
+        "three": 200
+      }
+    },
+    {
+      "id": "driftzone_01",
+      "name": "North Drift Zone",
+      "type": "drift_zone",
+      "edgeId": "e3",
+      "gates": [
+        [
+          50,
+          0,
+          100
+        ]
+      ],
+      "widthM": 12,
+      "scoring": {
+        "drift_zone": {
+          "angleWeight": 1.0,
+          "speedWeight": 1.0
+        }
+      },
+      "stars": {
+        "one": 1000,
+        "two": 2500,
+        "three": 5000
+      }
+    }
+  ]
+}

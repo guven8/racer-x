@@ -1,0 +1,4 @@
+- **No trademarks**: generic car names (e.g., RX‑01) and invented brands.
+- **Look‑alikes**: design language inspired by eras, not specific models; avoid distinctive trade dress.
+- **Contributor License Agreement (CLA)** for asset submissions; all community assets must be original or CC0/CC‑BY with proof.
+- **License**: Code under MIT; first‑party assets under CC‑BY‑SA; third‑party per folder `LICENSE` files.

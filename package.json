@@ -1,0 +1,55 @@
+{
+  "name": "racer-x",
+  "version": "0.1.0",
+  "description": "Open-world driving game built with Babylon.js, Rapier WASM, and TypeScript.",
+  "private": true,
+  "keywords": [
+    "racing-game",
+    "driving-simulator",
+    "open-world",
+    "car-physics",
+    "vehicle-dynamics",
+    "babylonjs",
+    "webgpu",
+    "typescript",
+    "rapier",
+    "wasm",
+    "vite",
+    "game-dev",
+    "webgl",
+    "physics-engine",
+    "3d-game",
+    "browser-game",
+    "indie-game",
+    "open-source",
+    "glb",
+    "gltf",
+    "ai-traffic"
+  ],
+  "homepage": "https://github.com/guven8/racer-x#readme",
+  "bugs": {
+    "url": "https://github.com/guven8/racer-x/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/guven8/racer-x.git"
+  },
+  "license": "MIT",
+  "author": "Guven <guven8@users.noreply.github.com>",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "test": "echo \"(no tests yet)\" && exit 0"
+  },
+  "dependencies": {
+    "@babylonjs/core": "^7.13.1",
+    "@babylonjs/loaders": "^7.13.1",
+    "@dimforge/rapier3d-compat": "^0.14.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.5.4",
+    "vite": "^5.4.10"
+  }
+}

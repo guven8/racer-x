@@ -1,0 +1,4 @@
+- **Freeroam** sync with interest management (cells within ~500 m).
+- Deterministic seeds for **traffic** so clients can locally simulate with server corrections.
+- Activities scored client‑side but validated server‑side; anti‑cheat sanity checks.
+- Later: temporary race events on closed sections using same world.

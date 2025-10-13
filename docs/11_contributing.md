@@ -1,0 +1,1 @@
+- PRs welcome once `M1` lands. Use conventional commits, add tests for math modules, attach profiler screenshots for perf-affecting changes. Assets must pass `tools/assetify` checks.

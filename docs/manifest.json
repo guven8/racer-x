@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json.schemastore.org/json-schema",
+  "project": "racer-x",
+  "version": "0.1.0",
+  "docs": [
+    { "id": "vision", "path": "docs/00_README.md" },
+    { "id": "tech", "path": "docs/01_tech_stack.md" },
+    { "id": "arch", "path": "docs/02_architecture.md" },
+    { "id": "gameplay", "path": "docs/03_gameplay_mechanics.md" },
+    { "id": "assets", "path": "docs/04_assets_pipeline.md" },
+    { "id": "performance", "path": "docs/05_performance.md" },
+    { "id": "controls", "path": "docs/06_controls_and_ui.md" },
+    { "id": "net", "path": "docs/07_networking_plan.md" },
+    { "id": "legal", "path": "docs/08_legal_and_ip.md" },
+    { "id": "milestones", "path": "docs/09_tasks_milestones.md" },
+    { "id": "open_questions", "path": "docs/10_open_questions.md" },
+    { "id": "contrib", "path": "docs/11_contributing.md" },
+    { "id": "getting_started", "path": "docs/12_getting_started.md" },
+    { "id": "llm_prompts", "path": "docs/13_llm_prompt_guides.md" },
+    { "id": "examples", "path": "docs/14_example_configs.md" },
+    { "id": "roadmap", "path": "docs/15_roadmap.md" },
+    { "id": "styleguide", "path": "docs/16_styleguide.md" }
+  ],
+  "schemas": [
+    { "id": "tuning", "path": "schemas/tuning.schema.json" },
+    { "id": "roadgraph", "path": "schemas/roadgraph.schema.json" },
+    { "id": "activity", "path": "schemas/activity.schema.json" }
+  ]
+}
