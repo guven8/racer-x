@@ -3,6 +3,7 @@ export class Input {
   throttle = 0;
   brake = 0;
   handbrake = 0;
+  reset = 0; // <-- add this
 
   private keys = new Set<string>();
 
@@ -23,6 +24,7 @@ export class Input {
     this.steer = (right ? 1 : 0) - (left ? 1 : 0);
     this.throttle = up ? 1 : 0;
     this.brake = down ? 1 : 0;
-    this.handbrake = this.keys.has(' ');
+    this.handbrake = this.keys.has(' ') ? 1 : 0;
+    this.reset = this.keys.has('r') ? 1 : 0;
   }
 }

@@ -82,6 +82,14 @@ export class Car {
     // simple handbrake = angular damping boost
     this.body.setAngularDamping(input.handbrake ? 4.0 : 0.5);
 
+    // Reset to origin when 'R' held
+    if (input.reset) {
+      this.body.setLinvel({ x: 0, y: 0, z: 0 }, true);
+      this.body.setAngvel({ x: 0, y: 0, z: 0 }, true);
+      this.body.setTranslation({ x: 0, y: 1.2, z: 0 }, true);
+      this.body.setRotation({ x: 0, y: 0, z: 0, w: 1 }, true);
+    }
+
     // integrate physics
     step(dt);
   }
