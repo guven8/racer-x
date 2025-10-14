@@ -21,7 +21,7 @@ export class Input {
     const right = this.keys.has('arrowright') || this.keys.has('d');
     const up = this.keys.has('arrowup') || this.keys.has('w');
     const down = this.keys.has('arrowdown') || this.keys.has('s');
-    this.steer = (right ? 1 : 0) - (left ? 1 : 0);
+    this.steer = (left ? 1 : 0) - (right ? 1 : 0);
     this.throttle = up ? 1 : 0;
     this.brake = down ? 1 : 0;
     this.handbrake = this.keys.has(' ') ? 1 : 0;

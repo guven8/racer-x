@@ -11,7 +11,7 @@ export class Car {
   mass = 1200;
   engineForce = 8000; // N
   brakeForce = 9000;
-  maxSteer = 0.6; // rad
+  maxSteer = 0.35; // rad
   drag = 0.35;
   rr = 12; // rolling resistance approx
   steerActivationSpeed = 0.4; // m/s before steering takes effect
@@ -77,7 +77,8 @@ export class Car {
         (this.steerSaturationSpeed - this.steerActivationSpeed);
       steerSpeedFactor = Math.min(1, Math.max(0, steerSpeedFactor));
     }
-    const yawTorque = steerAngle * 2000 * speedAttenuation * steerSpeedFactor;
+    const yawTorque =
+      steerAngle * 1200 * speedAttenuation * steerSpeedFactor;
     this.body.applyTorqueImpulse({ x: 0, y: yawTorque * dt, z: 0 }, true);
 
     // Longitudinal forces
