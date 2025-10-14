@@ -14,6 +14,11 @@ export class Car {
   maxSteer = 0.6; // rad
   drag = 0.35;
   rr = 12; // rolling resistance approx
+  steerActivationSpeed = 0.4; // m/s before steering takes effect
+  steerSaturationSpeed = 3; // m/s where steering torque reaches full strength
+  reverseForceScale = 0.55; // reverse gets less drive than forward
+  maxReverseSpeed = 12; // m/s (~43 kph)
+  reverseEngageSpeed = 0.5; // m/s threshold before we switch to reverse
 
   constructor(scene: BABYLON.Scene) {
     this.mesh = BABYLON.MeshBuilder.CreateBox(
@@ -61,23 +66,52 @@ export class Car {
     // steering: yaw torque proportional to steer and speed
     const vel = this.body.linvel();
     const speed = Math.hypot(vel.x, vel.z);
-    const steerAngle =
-      this.maxSteer * input.steer * (1.0 / (1.0 + speed * 0.05));
-    const yawTorque = steerAngle * 2000;
+    const forwardSpeed = vel.x * forward.x + vel.z * forward.z;
+    const speedAttenuation = 1.0 / (1.0 + speed * 0.05);
+    const steerAngle = this.maxSteer * input.steer;
+    let steerSpeedFactor = 0;
+    const absForwardSpeed = Math.abs(forwardSpeed);
+    if (absForwardSpeed > this.steerActivationSpeed) {
+      steerSpeedFactor =
+        (absForwardSpeed - this.steerActivationSpeed) /
+        (this.steerSaturationSpeed - this.steerActivationSpeed);
+      steerSpeedFactor = Math.min(1, Math.max(0, steerSpeedFactor));
+    }
+    const yawTorque = steerAngle * 2000 * speedAttenuation * steerSpeedFactor;
     this.body.applyTorqueImpulse({ x: 0, y: yawTorque * dt, z: 0 }, true);
 
-    // engine/brake forces
-    const engine = this.engineForce * input.throttle;
-    const brake = this.brakeForce * (input.brake ? 1 : 0);
+    // Longitudinal forces
+    let driveForce = 0;
 
-    // aero + rolling resistance
-    const dragForce = -this.drag * speed * speed;
-    const rrForce = -this.rr * speed;
+    if (input.throttle > 0) {
+      driveForce += this.engineForce * input.throttle;
+    }
 
-    const fx = forward.x * (engine + dragForce + rrForce) - forward.x * brake;
-    const fz = forward.z * (engine + dragForce + rrForce) - forward.z * brake;
+    if (input.brake) {
+      if (forwardSpeed > this.reverseEngageSpeed) {
+        // Moving forward: treat brake as stopping force.
+        driveForce -= this.brakeForce;
+      } else if (forwardSpeed > -this.maxReverseSpeed) {
+        // Near stopped or already reversing: use reduced engine force backwards.
+        driveForce -= this.engineForce * this.reverseForceScale;
+      }
+    }
 
-    this.body.applyImpulse({ x: fx * dt, y: 0, z: fz * dt }, true);
+    if (forwardSpeed <= -this.maxReverseSpeed && driveForce < 0) {
+      // Already at reverse speed limit; don't add more reverse thrust.
+      driveForce = 0;
+    }
+
+    // aero + rolling resistance (always oppose direction of travel)
+    const dragForce = -this.drag * forwardSpeed * Math.abs(forwardSpeed);
+    const rrForce = -this.rr * forwardSpeed;
+
+    const longitudinalForce = driveForce + dragForce + rrForce;
+
+    const impulseX = forward.x * longitudinalForce * dt;
+    const impulseZ = forward.z * longitudinalForce * dt;
+
+    this.body.applyImpulse({ x: impulseX, y: 0, z: impulseZ }, true);
 
     // simple handbrake = angular damping boost
     this.body.setAngularDamping(input.handbrake ? 4.0 : 0.5);
